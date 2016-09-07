@@ -60,7 +60,7 @@ class Validator<T> implements Valid.Validator<T> {
             let validationMessage = this.validateForRule(obj, rule);
 
             if (validationMessage != null) {
-                validationResult.messages.push(validationMessage);
+                validationResult.addMessage(validationMessage);
             }
         }
 

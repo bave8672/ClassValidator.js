@@ -6,15 +6,30 @@ declare module 'valid/src/interfaces/validator' {
 	export interface Validator<T> {
 	    rule(
 	        message: string,
-	        ruleFn: {(obj: T): boolean | void; }
+	        ruleFn: { (obj: T): boolean | void; }
 	    ): Validator<T>;
+
+	    rules(ruleDefinitions: IRule<T>[]): Validator<T>;
+
 	    ruleFor<TProp>(
-	        property: {(obj: T): TProp},
+	        property: { (obj: T): TProp},
 	        message: string,
-	        ruleFn: {(prop: TProp): boolean | void; }
+	        ruleFn: { (prop: TProp): boolean | void; }
 	    ): Validator<T>;
+
+	    rulesFor<TProp>(
+	        property: { (obj: T): TProp},
+	        ruleDefinitions: IRule<TProp>[]
+	    ): Validator<T>;
+
 	    validate(obj: T): IValidationResult<T>;
+
 	    isValid(obj: T): boolean;
+	}
+
+	export interface IRule<T> {
+	    message: string;
+	    ruleFn: {(obj: T): boolean | void; };
 	}
 
 	export interface IRuleFor<T, TProp> {
@@ -24,6 +39,8 @@ declare module 'valid/src/interfaces/validator' {
 	}
 
 	export interface IValidationResult<T> {
+	    addMessage(message: IValidationMessage<T, any>): IValidationResult<T>;
+	    messagesFor(property: { (obj: T): any; }): string[];
 	    isValid: boolean;
 	    messages: IValidationMessage<T, any>[];
 	}
@@ -31,7 +48,7 @@ declare module 'valid/src/interfaces/validator' {
 	export interface IValidationMessage<T, TProp> {
 	    error?: any;
 	    message: string;
-	    property: {(obj: T): TProp};
+	    property: { (obj: T): TProp};
 	}
 
 }
@@ -50,8 +67,14 @@ declare module 'valide' {
 declare module 'valid' {
 	/// <reference path="../typings/index.d.ts" />
 	import * as Valid from 'interfaces/validator'; class ValidationResult<T> implements Valid.IValidationResult<T> {
+	    _messages: Valid.IValidationMessage<T, any>[];
+	    _messagesFor: any;
+	    addMessage(message: Valid.IValidationMessage<T, any>): this;
 	    messages: Valid.IValidationMessage<T, any>[];
 	    isValid: boolean;
+	    messagesFor(property: {
+	        (obj: T): any;
+	    }): string[];
 	}
 	export { ValidationResult };
 
@@ -74,16 +97,25 @@ declare module 'valid' {
 	/// <reference path="../typings/index.d.ts" />
 	import * as Valid from 'interfaces/validator'; class Validator<T> implements Valid.Validator<T> {
 	    name: string;
-	    rules: Valid.IRuleFor<T, any>[];
+	    private _rules;
 	    constructor(name?: string);
 	    rule(message: string, ruleFn: {
 	        (obj: T): boolean | void;
 	    }): Validator<T>;
+	    rules(ruleDefinitions: {
+	        message: string;
+	        ruleFn: {
+	            (obj: T): boolean | void;
+	        };
+	    }[]): Validator<T>;
 	    ruleFor<TProp>(property: {
 	        (obj: T): TProp;
 	    }, message: string, ruleFn: {
 	        (prop: TProp): boolean | void;
 	    }): Validator<T>;
+	    rulesFor<TProp>(property: {
+	        (obj: T): TProp;
+	    }, ruleDefinitions: Valid.IRule<TProp>[]): this;
 	    validate(obj: T): Valid.IValidationResult<T>;
 	    isValid(obj: T): boolean;
 	    private validateForRule(obj, rule);

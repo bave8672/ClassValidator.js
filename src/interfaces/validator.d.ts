@@ -7,17 +7,22 @@ export interface Validator<T> {
         message: string,
         ruleFn: { (obj: T): boolean | void; }
     ): Validator<T>;
+
     rules(ruleDefinitions: IRule<T>[]): Validator<T>;
+
     ruleFor<TProp>(
         property: { (obj: T): TProp},
         message: string,
         ruleFn: { (prop: TProp): boolean | void; }
     ): Validator<T>;
+
     rulesFor<TProp>(
         property: { (obj: T): TProp},
         ruleDefinitions: IRule<TProp>[]
     ): Validator<T>;
+
     validate(obj: T): IValidationResult<T>;
+
     isValid(obj: T): boolean;
 }
 
@@ -33,6 +38,8 @@ export interface IRuleFor<T, TProp> {
 }
 
 export interface IValidationResult<T> {
+    addMessage(message: IValidationMessage<T, any>): IValidationResult<T>;
+    messagesFor(property: { (obj: T): any; }): string[];
     isValid: boolean;
     messages: IValidationMessage<T, any>[];
 }
