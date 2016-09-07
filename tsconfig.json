@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "outDir": "./lib",
+    "preserveConstEnums": true,
+    "removeComments": true,
+    "target": "es5"
+  },
+  "filesGlob": [
+    "typings/index.d.ts",
+    "src/**/*.ts",
+    "test/**/*.ts"
+  ],
+  "files": [
+    "typings\\index.d.ts",
+    "src\\ValidationMessage.ts",
+    "src\\ValidationResult.ts",
+    "src\\ValidationRule.ts",
+    "src\\Validator.ts",
+    "src\\interfaces\\validator.d.ts"
+  ]
+}
