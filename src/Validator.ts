@@ -79,18 +79,18 @@ class Validator<T> implements Valid.Validator<T> {
         return true;
     }
 
-    private validateForRule(obj: T, rule: Valid.IRuleFor<T, any>): Valid.IValidationMessage<T, any> {
-        let validationMessage: ValidationMessage<T, any>;
+    private validateForRule<TProp>(obj: T, rule: Valid.IRuleFor<T, TProp>): Valid.IValidationMessage<T, TProp> {
+        let validationMessage: ValidationMessage<T, TProp>;
 
         try {
             let prop = rule.property(obj);
             let isValid = rule.ruleFn(prop);
 
             if (isValid === false) {
-                validationMessage = new ValidationMessage<T, any>();
+                validationMessage = new ValidationMessage<T, TProp>();
             }
         } catch (error) {
-            validationMessage = new ValidationMessage<T, any>();
+            validationMessage = new ValidationMessage<T, TProp>();
             validationMessage.error = error;
         }
 
