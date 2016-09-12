@@ -22,6 +22,8 @@ var appName = (function (p) {
   return p.name;
 })(require('./package.json'));
 
+gulp.task('default', ['build', 'watch']);
+
 gulp.task('update-tsconfig', 'Update files section in tsconfig.json', function () {
   gulp.src(tsFilesGlob).pipe(tsconfig());
 });
@@ -53,10 +55,9 @@ gulp.task('_build', 'INTERNAL TASK - Compiles all TypeScript source files', func
     .pipe(gulp.dest('./lib/'));
 });
 
-//run tslint task, then run update-tsconfig and gen-def in parallel, then run _build
 gulp.task('build', 'Compiles all TypeScript source files and updates module references', function(callback) {
     rimraf.sync('./lib');
-    gulpSequence('tslint', ['update-tsconfig', 'gen-def'], '_build')(callback);
+    gulpSequence('tslint', ['update-tsconfig'], '_build')(callback);
 });
 
 gulp.task('test', 'Runs the Jasmine test specs', ['test-build'], function () {

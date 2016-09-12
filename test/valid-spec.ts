@@ -29,6 +29,12 @@ describe('Validator', () => {
        expect(numberValidator).toBeTruthy();
     });
 
+    it('Can have a name', () => {
+        let nameValidator = new Validator<any>('name');
+
+        expect(nameValidator.name).toBe('name');
+    });
+
     it('Should not validate without any validators', () => {
         let validationResult = CCValidator.validate(testCC);
 
@@ -53,38 +59,32 @@ describe('Validator', () => {
         expect(validationResult.isValid).toEqual(true);
     });
 
-   it('Can validate using a false return value', () => {
-       CCValidator.ruleFor(cc => cc.expirationDate, 'Expiration date cannot be in the past', d => d > new Date());
+    it('Can validate using a false return value', () => {
+        CCValidator.ruleFor(cc => cc.expirationDate, 'Expiration date cannot be in the past', d => d > new Date());
 
         let validationResult = CCValidator.validate(testCC);
 
         expect(validationResult.isValid).toEqual(false);
-   });
+    });
 
-   it('Returns messages to results', () => {
-       CCValidator.ruleFor(cc => cc.expirationDate, 'Expiration date cannot be in the past', d => d > new Date());
+    it('Returns messages to results', () => {
+        CCValidator.ruleFor(cc => cc.expirationDate, 'Expiration date cannot be in the past', d => d > new Date());
 
         let validationResult = CCValidator.validate(testCC);
 
         expect(validationResult.isValid).toEqual(false);
         expect(validationResult.messages[0].message).toBe('Expiration date cannot be in the past');
-   });
+    });
 
-   it('Can validate by throwing an error', () => {
-       let err = new Error();
-       CCValidator.rule('throw error always', cc => { throw err; });
+    it('Can validate by throwing an error', () => {
+        let err = new Error();
+        CCValidator.rule('throw error always', cc => { throw err; });
 
         let validationResult = CCValidator.validate(testCC);
 
         expect(validationResult.isValid).toEqual(false);
         expect(validationResult.messages[0].error).toBe(err);
-   });
-
-   it('Can have a name', () => {
-      let nameValidator = new Validator<any>('name');
-
-      expect(nameValidator.name).toBe('name');
-   });
+    });
 });
 
 

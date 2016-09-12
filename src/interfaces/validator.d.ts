@@ -28,7 +28,7 @@ export interface Validator<T> {
 
 export interface IRule<T> {
     message: string;
-    ruleFn: {(obj: T): boolean | void; };
+    ruleFn: { (obj: T): boolean | void; };
 }
 
 export interface IRuleFor<T, TProp> {
@@ -47,5 +47,14 @@ export interface IValidationResult<T> {
 export interface IValidationMessage<T, TProp> {
     error?: any;
     message: string;
-    property: { (obj: T): TProp};
+    property: { (obj: T): TProp; };
+}
+
+export interface IValidatable<T> {
+    validate(): IValidationResult<T>;
+    isValid(): boolean;
+}
+
+export interface IHasOwnValidator<T> {
+    validator: IValidatable<T>;
 }

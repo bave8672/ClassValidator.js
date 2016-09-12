@@ -20,7 +20,6 @@
     "src\\ValidationRule.ts",
     "src\\Validator.ts",
     "src\\interfaces\\validator.d.ts",
-    "test\\valid-spec.ts",
-    "test\\validationresult.spec.ts"
+    "test\\valid-spec.ts"
   ]
 }
