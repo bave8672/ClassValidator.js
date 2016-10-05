@@ -97,6 +97,7 @@ class Validator<T> implements Valid.Validator<T> {
         if (validationMessage != null) {
             validationMessage.message = rule.message;
             validationMessage.property = rule.property;
+            validationMessage.object = obj;
         }
 
         return validationMessage;

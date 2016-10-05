@@ -21,7 +21,7 @@ class ValidationResult<T> implements Valid.IValidationResult<T> {
     }
 
     public messagesFor(property: {(obj: T): any}): string[] {
-        return this._messages.filter(m => m.property.toString() === property.toString())
+        return this._messages.filter(m => m.property(m.object) === property(m.object))
             .map(m => m.message);
     }
 }
