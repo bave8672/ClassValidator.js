@@ -4,9 +4,10 @@
   "description": "valid",
   "license": "MIT",
   "repository": "",
-  "author": "",
+  "author": "avesbenjamin@gmail.com",
   "keywords": [
-    ""
+    "Validation",
+    "Typescript"
   ],
   "files": [
     "lib"
@@ -20,6 +21,7 @@
     "dotbin": "^1.0",
     "dts-generator": "^1.7",
     "gulp": "^3.9.0",
+    "gulp-concat": "^2.6.0",
     "gulp-help": "^1.6.0",
     "gulp-inject": "3.0.0",
     "gulp-jasmine": "^2.0.1",

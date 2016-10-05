@@ -73,6 +73,7 @@ describe('Validator', () => {
         let validationResult = CCValidator.validate(testCC);
 
         expect(validationResult.isValid).toEqual(false);
+        expect(validationResult.messages.length).toEqual(1);
         expect(validationResult.messages[0].message).toBe('Expiration date cannot be in the past');
     });
 

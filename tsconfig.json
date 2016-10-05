@@ -5,7 +5,7 @@
     "moduleResolution": "node",
     "noImplicitAny": true,
     "preserveConstEnums": true,
-    "removeComments": false,
+    "removeComments": true,
     "target": "es5"
   },
   "filesGlob": [
@@ -15,11 +15,13 @@
   ],
   "files": [
     "typings\\index.d.ts",
+    "src\\index.ts",
     "src\\ValidationMessage.ts",
     "src\\ValidationResult.ts",
     "src\\ValidationRule.ts",
     "src\\Validator.ts",
     "src\\interfaces\\validator.d.ts",
-    "test\\valid-spec.ts"
+    "test\\validator.spec.ts",
+    "test\\validationresult.spec.ts"
   ]
 }
