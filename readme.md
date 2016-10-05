@@ -4,7 +4,7 @@ A library for Object-Oriented style validation in JavaScript/TypeScript
 
 ### Creating a validator for a class
 
-```
+```typescript
 // Class we want to create a validator for:
 class CreditCardDetails {
     name: string;
@@ -18,7 +18,7 @@ CCValidator = new Validator<CreditCardDetails>();
 
 ### Adding rules
 
-```
+```typescript
 // Validation rules can be any function
 // They take the object instance as a parameter
 // They will pass if the function returns any value that is not false (null is fine).
@@ -36,7 +36,7 @@ CCValidator.ruleFor(cc => cc.name, 'Please enter the name on this card', name =>
 
 ### Running your validator
 
-```
+```typescript
 // Instance of the class we want to validate
 let testCC: CreditCardDetails = {
     name: 'David Icke',

@@ -75,6 +75,8 @@ describe('Validator', () => {
         expect(validationResult.isValid).toEqual(false);
         expect(validationResult.messages.length).toEqual(1);
         expect(validationResult.messages[0].message).toBe('Expiration date cannot be in the past');
+        
+        expect(validationResult.messagesFor(cc => cc.expirationDate)).toEqual(['Expiration date cannot be in the past']);
     });
 
     it('Can validate by throwing an error', () => {
