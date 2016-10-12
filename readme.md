@@ -1,6 +1,6 @@
 # ClassValidator.js
 
-A library for Object-Oriented style validation in JavaScript/TypeScript
+A library for Object-Oriented style validation in JavaScript/TypeScript.
 
 ### Creating a validator for a class
 
@@ -29,9 +29,9 @@ CCValidator.rule('It should still be truthy', cc => !!cc ? thow new Error('Rule 
 // We can also add rules for class properties
 // .rule() and .ruleFor() return the validator for fluency.
 CCValidator.ruleFor(cc => cc.name, 'Please enter the name on this card', name => !!name)
-        .ruleFor(cc => cc.number, 'Please enter a number', n => !!n)
-        .ruleFor(cc => cc.expirationDate, 'Please enter the expiration date for this card', d => !!d)
-        .ruleFor(cc => cc.expirationDate, 'Expiration date cannot be in the past', d => d > new Date());
+    .ruleFor(cc => cc.number, 'Please enter a number', n => !!n)
+    .ruleFor(cc => cc.expirationDate, 'Please enter the expiration date for this card', d => !!d)
+    .ruleFor(cc => cc.expirationDate, 'Expiration date cannot be in the past', d => d > new Date());
 ```
 
 ### Running your validator
@@ -49,4 +49,33 @@ let validationResult = CCValidator.validate(testCC);
 
 expect(validationResult.isValid).toEqual(false);
 expect(validationResult.messages[0].message).toBe('Expiration date cannot be in the past');
+```
+
+### Validation for child objects
+
+```typescript
+class Tiara {
+    color: string;
+    manufacturer: Manufacturer;
+}
+class Manufacturer {
+    name: string;
+}
+
+let manufacturerValidator = new Validator<Manufacturer>();
+manufacturerValidator.rule('Manufacturer must be defined', m => !!m);
+    .ruleFor(m => m.name, 'Name must be defined', n => !!n);
+
+let tiaraValidator = new Validator<Tiara>();
+tiaraValidator.childValidatorFor<Manufacturer>(t => t.manufacturer, manufacturerValidator);
+
+let tiara = new Tiara();
+tiara.color = 'Pearl';
+tiara.manufacturer = new Manufacturer();
+tiara.manufacturer.name = ''; // Not allowed.
+
+let validationResult = tiaraValidator.validate(tiara);
+
+expect(validationResult.messages.length).toBe(1);
+expect(validationResult.messages[0].message).toBe('Name must be defined');
 ```

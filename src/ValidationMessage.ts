@@ -1,8 +1,8 @@
 /// <reference path="../typings/index.d.ts" />
 
-import * as Valid from './interfaces/validator';
+import { IValidationMessage } from './interfaces';
 
-class ValidationMessage<T, TProp> implements Valid.IValidationMessage<T, TProp> {
+class ValidationMessage<T, TProp> implements IValidationMessage<T, TProp> {
     object: T;
     message: string;
     property: {(obj: T): TProp};

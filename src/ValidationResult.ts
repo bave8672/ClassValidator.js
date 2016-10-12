@@ -1,12 +1,12 @@
 /// <reference path="../typings/index.d.ts" />
 
-import * as Valid from './interfaces/validator';
+import { IValidationResult, IValidationMessage } from './interfaces';
 
-class ValidationResult<T> implements Valid.IValidationResult<T> {
+class ValidationResult<T> implements IValidationResult<T> {
 
-    _messages: Valid.IValidationMessage<T, any>[] = [];
+    _messages: IValidationMessage<T, any>[] = [];
 
-    addMessage(message: Valid.IValidationMessage<T, any>) {
+    addMessage(message: IValidationMessage<T, any>) {
         this._messages.push(message);
 
         return this;

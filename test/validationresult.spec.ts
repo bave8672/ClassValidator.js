@@ -7,5 +7,6 @@ describe('ValidationResult', () => {
 
     it('Can be instantiated', () => {
         let result = new ValidationMessage();
+        expect(result).not.toBeNull();
     });
 });

@@ -1,17 +1,32 @@
 /// <reference path="../typings/index.d.ts" />
 
-import * as Valid from './interfaces/validator';
-import { ValidationResult } from './ValidationResult';
-import { ValidationMessage } from './ValidationMessage';
+import { IRule, IRuleFor, IValidationResult, IValidationMessage, IValidator } from './interfaces';
 import { ValidationRule } from './ValidationRule';
+import { ValidationMessage } from './ValidationMessage';
+import { ValidationResult } from './ValidationResult';
 
-class Validator<T> implements Valid.Validator<T> {
+class Validator<T> implements IValidator<T> {
 
     public name: string;
-    private _rules: Valid.IRuleFor<T, any>[] = [];
+    public _rules: IRuleFor<T, any>[] = [];
 
     constructor(name?: string) {
         this.name = name;
+    }
+
+    childValidatorFor<TProp>(
+        property: { (obj: T): TProp},
+        validator: Validator<TProp>
+    ) {
+        validator._rules.forEach(r => {
+            let rule = new ValidationRule<T, any>();
+            rule.ruleFn = r.ruleFn;
+            rule.message = r.message;
+            rule.property = obj => r.property(property(obj));
+            this._rules.push(rule);
+        });
+
+        return this;
     }
 
     rule(
@@ -35,24 +50,24 @@ class Validator<T> implements Valid.Validator<T> {
         ruleFn: {(prop: TProp): boolean | void; }
     ): Validator<T> {
         let rule = new ValidationRule<T, TProp>();
-
         rule.property = property;
         rule.message = message;
         rule.ruleFn = ruleFn;
 
         this._rules.push(rule);
+
         return this;
     }
 
     rulesFor<TProp>(
         property: { (obj: T): TProp},
-        ruleDefinitions: Valid.IRule<TProp>[]
+        ruleDefinitions: IRule<TProp>[]
     ) {
         ruleDefinitions.forEach(r => this.ruleFor(property, r.message, r.ruleFn));
         return this;
     }
 
-    validate(obj: T): Valid.IValidationResult<T> {
+    validate(obj: T): IValidationResult<T> {
 
         let validationResult = new ValidationResult<T>();
 
@@ -79,7 +94,7 @@ class Validator<T> implements Valid.Validator<T> {
         return true;
     }
 
-    private validateForRule<TProp>(obj: T, rule: Valid.IRuleFor<T, TProp>): Valid.IValidationMessage<T, TProp> {
+    private validateForRule<TProp>(obj: T, rule: IRuleFor<T, TProp>): IValidationMessage<T, TProp> {
         let validationMessage: ValidationMessage<T, TProp>;
 
         try {

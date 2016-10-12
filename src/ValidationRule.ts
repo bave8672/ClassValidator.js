@@ -1,10 +1,10 @@
 /// <reference path="../typings/index.d.ts" />
 
-import * as Valid from './interfaces/validator';
+import { IRuleFor } from './interfaces';
 
-class ValidationRule<T, TProp> implements Valid.IRuleFor<T, TProp> {
+class ValidationRule<T, TProp> implements IRuleFor<T, TProp> {
     property: {(obj: T): TProp};
-    ruleFn: {(prop: TProp): any};
+    ruleFn: {(prop: TProp): boolean | void};
     message: string;
 }
 

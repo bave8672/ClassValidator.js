@@ -20,8 +20,14 @@
     "src\\ValidationResult.ts",
     "src\\ValidationRule.ts",
     "src\\Validator.ts",
-    "src\\interfaces\\validator.d.ts",
-    "test\\validator.spec.ts",
-    "test\\validationresult.spec.ts"
+    "src\\interfaces\\index.d.ts",
+    "src\\interfaces\\IRule.d.ts",
+    "src\\interfaces\\IRuleFor.d.ts",
+    "src\\interfaces\\IValidatable.d.ts",
+    "src\\interfaces\\IValidationMessage.d.ts",
+    "src\\interfaces\\IValidationResult.d.ts",
+    "src\\interfaces\\IValidator.d.ts",
+    "test\\validationresult.spec.ts",
+    "test\\validator.spec.ts"
   ]
 }

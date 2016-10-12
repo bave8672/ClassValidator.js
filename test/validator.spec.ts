@@ -75,7 +75,7 @@ describe('Validator', () => {
         expect(validationResult.isValid).toEqual(false);
         expect(validationResult.messages.length).toEqual(1);
         expect(validationResult.messages[0].message).toBe('Expiration date cannot be in the past');
-   
+
         expect(validationResult.messagesFor(cc => cc.expirationDate)).toEqual(['Expiration date cannot be in the past']);
     });
 
@@ -88,6 +88,32 @@ describe('Validator', () => {
         expect(validationResult.isValid).toEqual(false);
         expect(validationResult.messages[0].error).toBe(err);
     });
-});
 
+    it('Can add validators to properties', () => {
+        class Tiara {
+            color: string;
+            manufacturer: Manufacturer;
+        }
+        class Manufacturer {
+            name: string;
+        }
+
+        let manufacturerValidator = new Validator<Manufacturer>();
+        manufacturerValidator.rule('Manufacturer must be defined', m => !!m);
+        manufacturerValidator.ruleFor(m => m.name, 'Name must be defined', n => !!n);
+
+        let tiaraValidator = new Validator<Tiara>();
+        tiaraValidator.childValidatorFor<Manufacturer>(t => t.manufacturer, manufacturerValidator);
+
+        let tiara = new Tiara();
+        tiara.color = 'Pearl';
+        tiara.manufacturer = new Manufacturer();
+        tiara.manufacturer.name = ''; // Not allowed.
+
+        let validationResult = tiaraValidator.validate(tiara);
+
+        expect(validationResult.messages.length).toBe(1);
+        expect(validationResult.messages[0].message).toBe('Name must be defined');
+    });
+});
 
