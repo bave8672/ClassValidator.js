@@ -9,6 +9,7 @@ var dtsGenerator = require('dts-generator');
 var ts = require('gulp-typescript');
 var tsProject = ts.createProject('tsconfig.json');
 var rimraf = require('rimraf');
+var plumber = require('gulp-plumber')
 require('dotbin');
 
 var tsFilesGlob = (function (c) {
@@ -52,20 +53,24 @@ gulp.task('_build', 'INTERNAL TASK - Compiles all TypeScript source files', func
 
 gulp.task('build', 'Compiles all TypeScript source files and updates module references', function(callback) {
     rimraf.sync('./lib');
-    gulpSequence('tslint', ['update-tsconfig'], '_build')(callback);
+    return gulpSequence('tslint', ['update-tsconfig'], '_build')(callback);
 });
 
 gulp.task('test', 'Runs the Jasmine test specs', ['test-build'], function () {
-    return gulp.src('./.test/**/*.js')
-        .pipe(jasmine());
+    var pipeline = gulp.src('./.test/**/*.js');
+    pipeline.pipe(plumber())
+    return pipeline.pipe(jasmine());
 });
 
-gulp.task('test-build', function() {
-   rimraf.sync('./.test');
+gulp.task('test-build', ['test-clean'], function() {
    return tsProject.src('./test/**/*.ts')
     .pipe(ts(tsProject))
     .pipe(gulp.dest('./.test/'));
 });
+
+gulp.task('test-clean', function() {
+  return rimraf.sync('./.test');
+})
 
 gulp.task('watch', 'Watches ts source files and runs build on change', function () {
   gulp.watch('./src/**/*.ts', ['build', 'test']);

@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "valid",
   "license": "MIT",
-  "repository": "",
+  "repository": "https://www.github.com/bave8672/ClassValidator.js",
   "author": "avesbenjamin@gmail.com",
   "keywords": [
     "Validation",
@@ -24,12 +24,14 @@
     "gulp-help": "^1.6.0",
     "gulp-inject": "3.0.0",
     "gulp-jasmine": "^2.0.1",
+    "gulp-plumber": "^1.1.0",
     "gulp-sequence": "0.4.1",
     "gulp-tsc": "^1.2.3",
     "gulp-tsconfig-files": "0.0.2",
     "gulp-tslint": "^3.1",
     "gulp-typescript": "^2.13.6",
     "jasmine": "^2.3.1",
+    "jasmine-reporters": "^2.2.0",
     "rimraf": "^2.5.4",
     "tslint": "^3.5",
     "typescript": "^1.8"

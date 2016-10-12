@@ -3,5 +3,4 @@ node_js:
   - "4"
   - "6"
 before_script:
-  - npm install -g gulp
-  - gulp test
+  - npm install -g gulp typescript
