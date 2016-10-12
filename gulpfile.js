@@ -4,10 +4,7 @@ var exec = require('child_process').exec;
 var jasmine = require('gulp-jasmine');
 var gulp = require('gulp-help')(gulp);
 var tsconfig = require('gulp-tsconfig-files');
-var path = require('path');
-var inject = require('gulp-inject');
 var gulpSequence = require('gulp-sequence');
-var del = require('del');
 var dtsGenerator = require('dts-generator');
 var ts = require('gulp-typescript');
 var tsProject = ts.createProject('tsconfig.json');
@@ -29,9 +26,7 @@ gulp.task('update-tsconfig', 'Update files section in tsconfig.json', function (
 });
 
 gulp.task('clean', 'Cleans the generated js files from lib directory', function () {
-  return del([
-    './lib/**/*'
-  ]);
+  return rimraf('./lib/**/*');
 });
 
 gulp.task('tslint', 'Lints all TypeScript source files', function () {
@@ -45,7 +40,7 @@ gulp.task('gen-def', 'Generate a single .d.ts bundle containing external module 
     name: appName,
     project: '.',
     out: './lib/' + appName + '.d.ts',
-    exclude: ['node_modules/**/*.d.ts', 'typings/**/*.d.ts', './test/**/*.d.ts']
+    exclude: ['./node_modules/**/*.d.ts', './typings/**/*.d.ts', './test/**/*.d.ts']
   });
 });
 

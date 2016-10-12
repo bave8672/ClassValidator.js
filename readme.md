@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/bave8672/ClassValidator.js.svg?branch=master)](https://travis-ci.org/bave8672/ClassValidator.js)
+
 # ClassValidator.js
 
 A library for Object-Oriented style validation in JavaScript/TypeScript.

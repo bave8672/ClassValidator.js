@@ -17,7 +17,6 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "del": "2.0.2",
     "dotbin": "^1.0",
     "dts-generator": "^1.7",
     "gulp": "^3.9.0",
