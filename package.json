@@ -1,5 +1,5 @@
 {
-  "name": "valid",
+  "name": "class-validator-ts",
   "version": "0.0.0",
   "description": "valid",
   "license": "MIT",
@@ -38,5 +38,6 @@
   "engines": {
     "node": ">=2.0.0"
   },
+  "main": "./lib/src/index",
   "typings": "./lib/valid.d.ts"
 }

@@ -4,6 +4,12 @@
 
 A library for Object-Oriented style validation in JavaScript/TypeScript.
 
+### Import
+
+```typescript
+const Validator = require('class-validator-ts').Validator;
+```
+
 ### Creating a validator for a class
 
 ```typescript
