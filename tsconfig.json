@@ -8,11 +8,6 @@
     "removeComments": true,
     "target": "es5"
   },
-  "filesGlob": [
-    "typings/index.d.ts",
-    "src/**/*.ts",
-    "test/**/*.ts"
-  ],
   "files": [
     "src/ValidationMessage.ts",
     "src/ValidationResult.ts",

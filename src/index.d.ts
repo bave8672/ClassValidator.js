@@ -1,0 +1,1 @@
+export { IValidator as Validator } from './interfaces';
